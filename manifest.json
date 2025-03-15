@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Phishing Website Detector",
+    "name": "BOOMERAngel",
     "version": "1.0",
-    "description": "Checks if a website is phishing.",
+    "description": "L'aiutante di cui tutti i boomer (e non solo) hanno bisogno",
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
