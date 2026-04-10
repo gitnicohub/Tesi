@@ -1,0 +1,15 @@
+ipykernel
+dict_hash
+notebook
+typing_extensions>=4.12.0
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+streamlit
+tensorflow
+python-whois
+ipywidgets
+tqdm
+xgboost

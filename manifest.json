@@ -1,15 +1,22 @@
 {
-    "manifest_version": 3,
-    "name": "BOOMERAngel",
-    "version": "1.0",
-    "description": "L'aiutante di cui tutti i boomer (e non solo) hanno bisogno",
-    "action": {
-      "default_popup": "popup.html",
-      "default_icon": {
-        "16": "icon.png",
-        "48": "icon.png",
-        "128": "icon.png"
-      }
+  "manifest_version": 3,
+  "name": "BOOMERAngel Phishing Detector",
+  "version": "1.0",
+  "description": "Estensione intelligente per il rilevamento del phishing in tempo reale.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
     }
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "host_permissions": [
+    "http://127.0.0.1:5000/*"
+  ]
 }
-  

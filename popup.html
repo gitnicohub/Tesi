@@ -1,47 +1,272 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> BOOMERAngel Phishing Detector</title>
+    <meta charset="UTF-8">
+    <title>BOOMERAngel Phishing Detector</title>
     <style>
+        :root {
+            --apple-blue: #007aff;
+            --apple-green: #34c759;
+            --apple-red: #ff3b30;
+            --apple-bg: #f5f5f7;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: black;
-        }
-        #heading{
-            text-align: center;
-            color:aqua;
-            font-weight: 1000;
-        }
-        #urlInput {
-            margin: auto;
-            text-align: center;
-            width: 300px;
-        }
-        #btn_container{
+            background-color: var(--apple-bg);
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(28,100%,74%,0.4) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,0.4) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,76%,0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,77%,0.4) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(242,100%,70%,0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(343,100%,76%,0.4) 0px, transparent 50%);
+            margin: 0;
+            min-height: 100vh;
             display: flex;
-            height:fit-content;
-            width:100%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--text-main);
+            /* A smaller size to mimic chrome extension bounds */
+            width: 360px;
+            height: auto;
+        }
+
+        #container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 24px;
+            width: 100%;
+            margin: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f5 100%);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,1);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        #heading {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        #urlInput {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+            font-weight: 500;
+        }
+
+        #urlInput:focus {
+            background: #ffffff;
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+        }
+
+        #urlInput::placeholder {
+            color: #aeaeb2;
+            font-weight: 400;
+        }
+
+        #btn_container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #checkButton {
+            background: var(--apple-blue);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-size: 15px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0, 122, 255, 0.3);
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
-        #checkButton {
-            margin: auto;
-            cursor: pointer;
-            margin-top: 10px;
+
+        #checkButton:hover {
+            background: #0070ea;
+            transform: scale(1.02);
         }
+
+        #checkButton:active {
+            transform: scale(0.98);
+        }
+
+        #checkButton.checking {
+            background: #e5e5ea;
+            color: var(--text-secondary);
+            box-shadow: none;
+            cursor: default;
+            transform: scale(1);
+        }
+
         #result {
             text-align: center;
-            color:aqua;
-            margin-top: 20px;
-            font-size: 15px;
-            font-weight: 1000;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            min-height: 85px;
+        }
+
+        #result.safe {
+            background: rgba(52, 199, 89, 0.12);
+            border-color: rgba(52, 199, 89, 0.3);
+            color: #248a3d;
+        }
+
+        #result.danger {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: rgba(255, 59, 48, 0.25);
+            color: #d70015;
+        }
+
+        #result.neutral {
+            color: var(--text-secondary);
+        }
+
+        .result-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .result-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .result-details {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--text-secondary);
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
-    <h2 id="heading">Phishing Website Detector</h2>
-    <input type="text" id="urlInput" placeholder="Enter URL here">
-    <div id="btn_container"><button id="checkButton">Check</button></div>
-    <p id="result"></p>
+    <div id="container">
+        <div class="logo-container">
+            <div class="logo">🛡️</div>
+            <h2 id="heading">BOOMERAngel</h2>
+            <p class="tagline">Protezione phishing intelligente</p>
+        </div>
+        
+        <input type="text" id="urlInput" placeholder="Inserisci l'URL da verificare">
+        
+        <div id="btn_container">
+            <button id="checkButton">
+                <div class="button-content">
+                    <span id="buttonText">Verifica sicurezza</span>
+                </div>
+            </button>
+        </div>
+        
+        <div id="result" class="neutral">
+            <span class="result-icon">🔍</span>
+            <div class="result-text">Pronto per la verifica</div>
+            <div class="result-details">Inserisci un URL per iniziare l'analisi</div>
+        </div>
+    </div>
+    <!-- <script src="lgb_model.js"></script> -->
     <script src="popup.js"></script>
 </body>
 </html>
