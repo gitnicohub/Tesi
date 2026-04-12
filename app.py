@@ -42,17 +42,6 @@ def havingIP(url):
 def haveAtSign(url):
     return 1 if "@" in url else 0
 
-# def getLength(url):
-#     return 0 if len(url) < 54 else 1
-
-# def getDepth(url):
-#     s = urlparse(url).path.split('/')
-#     depth = 0
-#     for j in range(len(s)):
-#         if len(s[j]) != 0:
-#             depth += 1
-#     return depth
-
 def redirection(url):
     pos = url.rfind('//')
     if pos > 6:
